@@ -1,0 +1,15 @@
+[package]
+name = "slint-color-picker"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+image = "0.25.5"
+imageproc = "0.25.0"
+hsv = "0.1.1"
+# slint = { version="1.10", git ="https://github.com/slint-ui/slint", branch = "master" }
+slint = { path ="../slint/api/rs/slint" }
+
+[build-dependencies]
+# slint-build = { version = "1.10", git ="https://github.com/slint-ui/slint", branch = "master" }
+slint-build = { path ="../slint/api/rs/build" }

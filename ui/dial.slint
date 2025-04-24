@@ -1,0 +1,52 @@
+export component Dial inherits Rectangle {
+    width: 60px;
+    height: self.width;
+    border-radius: self.width / 2;
+    border-width: 2px;
+    border-color: white;
+
+    in property <length> center;
+    in property <length> radius;
+    in-out property <angle> angle;
+    in property <float> offset;
+    in property <string> label;
+    in property <length> radjust: 25px;
+    out property <float> value : Math.abs(100 - Math.mod(self.oangle,360)/1.8);
+
+    callback rotated(angle);
+
+    property <float> oangle: Math.mod(self.angle / 1deg - self.offset, 360);
+    property <angle> prev-angle;
+
+    x: (center - self.width / 2) + Math.cos(-self.angle) * radius;
+    y: (center - self.width / 2) + Math.sin(-self.angle) * radius;
+
+    TouchArea {
+        property <angle> angle-diff;
+        moved => {
+            // debug(self.mouse-x + parent.x - parent.radius - parent.radjust);
+            // debug(self.mouse-y + parent.y - parent.radius - parent.radjust);
+            parent.prev-angle = parent.angle;
+            parent.angle = Math.mod(Math.atan2((self.mouse-x + parent.x - parent.radius - parent.radjust) / 1px,(self.mouse-y + parent.y - parent.radius - parent.radjust) / 1px) - 90deg, 360deg);
+            angle-diff = parent.angle - parent.prev-angle;
+            parent.rotated(Math.abs(angle-diff) < Math.abs(angle-diff - 360deg) ? angle-diff : angle-diff - 360deg);
+        }
+    }
+}
+
+export component LabelDial inherits Dial {
+    Text {
+        text: Math.round(parent.value);
+        color: white;
+    }
+
+    Text {
+        property <length> cos: Math.cos(-parent.angle) * 35px;
+        property <length> sin: Math.sin(-parent.angle) * 35px;
+        x: 30px + self.cos + (parent.angle / 1deg > 90 && parent.angle / 1deg < 270 ? -self.width  : 0px);
+        y: 30px + self.sin + (parent.angle / 1deg > 0  && parent.angle / 1deg < 180 ? -self.height : 0px);
+
+        text: parent.label;
+        color: white;
+    }
+}

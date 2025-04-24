@@ -1,0 +1,177 @@
+import "./assets/fonts/Pacifico_Regular.ttf";
+import { VerticalBox } from "std-widgets.slint";
+import { ColorPatch } from "colorpatch.slint";
+import { Dial, LabelDial } from "dial.slint";
+import { AppLogic } from "applogic.slint";
+
+export component MainWindow inherits Window {
+    width: 640px;
+    height: 1000px;
+    background: #404040;
+
+    property <angle> saturation-angle: 45deg;
+    property <angle> value-angle: 225deg;
+    property <angle> dial1-angle: 90deg;
+    property <angle> dial2-angle: 124deg;
+    property <angle> dial3-angle: 56deg;
+    property <angle> dial4-angle: 270deg;
+
+    VerticalLayout {
+        alignment: center;
+        VerticalLayout {
+            alignment: start;
+            spacing: 0px;
+
+            HorizontalLayout {
+                alignment: center;
+                Rectangle {
+                    border-width: 1px;
+                    border-color: white;
+                    width: root.width / 1.8 + 180px;
+                    height: self.width;
+
+                    property <length> center: self.width / 2;
+                    property <length> dial-radius: self.width / 2.2;
+                    property <length> inner-dial-radius: dial-radius - 95px;
+
+                    roulette := Rectangle {
+                        clip: true;
+                        border-width: 5px;
+                        border-color: white;
+                        width: root.width / 1.8;
+                        height: self.width;
+                        border-radius: self.width / 2;
+                        background: transparent;
+
+                        Image {
+                            width: roulette.width;
+                            height: roulette.height;
+                            image-fit: fill;
+
+                            // source: @image-url("./assets/images/gradient.png");
+                            source: AppLogic.color-image;
+                        }
+                    }
+
+                    Rectangle {
+                        border-width: 5px;
+                        border-color: white;
+                        width: roulette.width - 110px;
+                        height: self.width;
+                        background: root.background;
+                        border-radius: self.width / 2;
+                    }
+
+                    Rectangle {
+                        border-width: 1px;
+                        border-color: blue;
+                        width: 10px;
+                        height: self.width;
+                        border-radius: self.width / 2;
+                    }
+
+                    value-dial := LabelDial {
+                        center: parent.center;
+                        radius: parent.dial-radius;
+                        angle <=> root.value-angle;
+                        offset: 225;
+                        label: "Value";
+                    }
+
+                    saturation-dial := LabelDial {
+                        center: parent.center;
+                        radius: parent.dial-radius;
+                        angle <=> root.saturation-angle;
+                        background:blue;
+                        offset: 45;
+                        label: "Saturation";
+                    }
+
+                    Dial {
+                        width: 31px;
+                        center: parent.center;
+                        radius: parent.inner-dial-radius;
+                        border-width: 3.5px;
+                        radjust: 120px;
+                        angle <=> root.dial1-angle;
+                        rotated(diff) => {
+                            root.dial2-angle += diff;
+                            root.dial3-angle += diff;
+                            root.dial4-angle += diff;
+                        }
+                    }
+
+                    Dial {
+                        width: 25px;
+                        center: parent.center;
+                        radius: parent.inner-dial-radius;
+                        radjust: 120px;
+                        angle <=> root.dial2-angle;
+                        rotated(diff) => {
+                            root.dial3-angle -= diff;
+                        }
+                    }
+
+                    Dial {
+                        width: 25px;
+                        center: parent.center;
+                        radius: parent.inner-dial-radius;
+                        radjust: 120px;
+                        angle <=> root.dial3-angle;
+                        rotated(diff) => {
+                            debug(self.x, self.y);
+                            root.dial2-angle -= diff;
+                        }
+                    }
+
+                    Dial {
+                        width: 25px;
+                        center: parent.center;
+                        radius: parent.inner-dial-radius;
+                        radjust: 120px;
+                        angle <=> root.dial4-angle;
+                    }
+                }
+            }
+
+            Text {
+                font-family: "Pacifico";
+                font-size: 45pt;
+                width: 100%;
+                color: white;
+
+                horizontal-alignment: center;
+                text: "Color Roulette";
+            }
+
+            Text {
+                font-family: "Pacifico";
+                font-size: 45pt;
+                width: 100%;
+                color: white;
+
+                horizontal-alignment: center;
+                text: "1000";
+            }
+
+            HorizontalLayout {
+                spacing: 40px;
+                alignment: center;
+                cpatch1 := ColorPatch {
+                    color: #990000;
+                }
+
+                cpatch2 := ColorPatch {
+                    color: #009900;
+                }
+
+                cpatch3 := ColorPatch {
+                    color: #000099;
+                }
+                cpatch4 := ColorPatch {
+                    color: #004444;
+                }
+            }
+        }
+    }
+}

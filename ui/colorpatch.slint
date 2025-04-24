@@ -1,0 +1,20 @@
+export component ColorPatch inherits VerticalLayout {
+    in property <color> color: #990000;
+    alignment: start;
+    spacing: 14px;
+
+    Rectangle {
+        width: 70px;
+        height: self.width;
+        border-radius: self.width / 2;
+        border-color: white;
+        border-width: 5px;
+
+        background: parent.color;
+    }
+    ctext:= Text {
+        color: #bbbbbb;
+        font-size: 13px;
+        text: parent.color;
+    }
+}
