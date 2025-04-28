@@ -25,7 +25,7 @@ export component MainWindow inherits Window {
             HorizontalLayout {
                 alignment: center;
                 Rectangle {
-                    border-width: 1px;
+                    border-width: 0px;
                     border-color: white;
                     width: root.width / 1.8 + 180px;
                     height: self.width;
@@ -36,16 +36,16 @@ export component MainWindow inherits Window {
 
                     roulette := Rectangle {
                         clip: true;
-                        border-width: 5px;
-                        border-color: white;
+                        // border-width: 2px;
+                        // border-color: white;
                         width: root.width / 1.8;
                         height: self.width;
                         border-radius: self.width / 2;
                         background: transparent;
 
                         Image {
-                            width: roulette.width;
-                            height: roulette.height;
+                            width: roulette.width + 10px;
+                            height: roulette.height + 10px;
                             image-fit: fill;
 
                             // source: @image-url("./assets/images/gradient.png");
@@ -54,7 +54,7 @@ export component MainWindow inherits Window {
                     }
 
                     Rectangle {
-                        border-width: 5px;
+                        border-width: 0px;
                         border-color: white;
                         width: roulette.width - 110px;
                         height: self.width;
@@ -74,6 +74,11 @@ export component MainWindow inherits Window {
                         center: parent.center;
                         radius: parent.dial-radius;
                         angle <=> root.value-angle;
+
+                        changed value => {
+                            AppLogic.hsv-value-changed(self.value);
+                        }
+
                         offset: 225;
                         label: "Value";
                     }
@@ -82,7 +87,12 @@ export component MainWindow inherits Window {
                         center: parent.center;
                         radius: parent.dial-radius;
                         angle <=> root.saturation-angle;
-                        background:blue;
+
+                        changed value => {
+                            AppLogic.hsv-saturation-changed(self.value);
+                        }
+
+                        // background:blue;
                         offset: 45;
                         label: "Saturation";
                     }
