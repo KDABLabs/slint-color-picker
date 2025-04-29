@@ -8,8 +8,8 @@ image = "0.25.5"
 imageproc = "0.25.0"
 hsv = "0.1.1"
 # slint = { version="1.10", git ="https://github.com/slint-ui/slint", branch = "master" }
-slint = { path ="../slint/api/rs/slint" }
+slint = { git ="https://github.com/bennysj/slint.git", branch = "kdab-work-v1" }
 
 [build-dependencies]
 # slint-build = { version = "1.10", git ="https://github.com/slint-ui/slint", branch = "master" }
-slint-build = { path ="../slint/api/rs/build" }
+slint-build = { git ="https://github.com/bennysj/slint.git", branch = "kdab-work-v1" }
