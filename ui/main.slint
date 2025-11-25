@@ -5,8 +5,7 @@ import { Dial, LabelDial } from "dial.slint";
 import { AppLogic } from "applogic.slint";
 
 export component MainWindow inherits Window {
-    width: 640px;
-    height: 1000px;
+    property <length> wsize: 640px;
     background: #404040;
 
     property <angle> saturation-angle: 45deg;
@@ -27,7 +26,7 @@ export component MainWindow inherits Window {
                 Rectangle {
                     border-width: 0px;
                     border-color: white;
-                    width: root.width / 1.8 + 180px;
+                    width: root.wsize / 1.8 + 180px;
                     height: self.width;
 
                     property <length> center: self.width / 2;
@@ -41,7 +40,7 @@ export component MainWindow inherits Window {
 
                         // border-width: 2px;
                         // border-color: white;
-                        width: root.width / 1.8;
+                        width: root.wsize / 1.8;
                         height: self.width;
                         border-radius: self.width / 2;
                         background: transparent;

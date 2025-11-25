@@ -177,6 +177,12 @@ impl App {
                 });
         }
 
+        window
+            .global::<crate::ui::AppLogic>()
+            .on_format_color(move |color| {
+                slint::SharedString::from(format!("#{:02x}{:02x}{:02x}", color.red(), color.green(), color.blue()))
+            });
+
         let backend = backend.clone();
         let mut app = Self { window, backend };
 

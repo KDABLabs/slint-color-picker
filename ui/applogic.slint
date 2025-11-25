@@ -1,6 +1,7 @@
 export global AppLogic {
     callback hsv-saturation-changed(float);
     callback hsv-value-changed(float);
+    pure callback format-color(color) -> string;
 
     in property <image> color-image;
     in-out property <float> hsv-saturation;

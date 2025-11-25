@@ -1,6 +1,9 @@
+import { AppLogic } from "applogic.slint";
+
 export component ColorPatch inherits VerticalLayout {
     in property <color> color: #990000;
     alignment: start;
+    padding-bottom: 4px;
     spacing: 14px;
 
     Rectangle {
@@ -13,8 +16,9 @@ export component ColorPatch inherits VerticalLayout {
         background: parent.color;
     }
     ctext:= Text {
+        horizontal-alignment: center;
         color: #bbbbbb;
         font-size: 13px;
-        text: parent.color;
+        text: AppLogic.format-color(parent.color);
     }
 }
